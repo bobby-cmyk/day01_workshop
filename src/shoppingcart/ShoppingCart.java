@@ -23,18 +23,18 @@ public class ShoppingCart {
                 continue;
             }
             items.add(toAddItem);
-            System.out.printf("%s added to cart\n", toAddItem);
+            System.out.printf(">>> %s added to cart\n", toAddItem);
         }
     }
 
     public void list() {
         if (items.isEmpty()) {
-            System.out.println("Your cart is empty");
+            System.out.println(">>> Your cart is empty");
         }
 
         else {
             for (int i = 0; i < items.size(); i++) {
-                System.out.printf("%d. %s\n", i+1, items.get(i));
+                System.out.printf(">>> %d. %s\n", i+1, items.get(i));
             }
         }
     }
@@ -42,12 +42,12 @@ public class ShoppingCart {
     public void delete(int itemNumber) {
         int index = itemNumber - 1;
         if (index < 0 || index >= items.size()) {
-            System.out.println("Incorrect item index");
+            System.out.println(">>> Incorrect item index");
         }
         else {
             String itemToDelete = items.get(index);
             items.remove(index);
-            System.out.printf("%s removed from cart\n", itemToDelete);
+            System.out.printf(">>> %s removed from cart\n", itemToDelete);
         }
     }
 }
