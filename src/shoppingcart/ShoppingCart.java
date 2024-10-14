@@ -14,11 +14,11 @@ public class ShoppingCart {
 
     // Method to add items into cart
     // able to add more than one item, separated by commas
-    public void add(String toAdd) {
-        String[] toAddItems = toAdd.split(",");
+    public void add(String[] toAdd) {
+        
 
-        for (int i = 0; i < toAddItems.length; i++) {
-            String toAddItem = toAddItems[i].trim();
+        for (int i = 1; i < toAdd.length; i++) {
+            String toAddItem = toAdd[i].trim().replaceAll(",", "");
             if (toAddItem.isEmpty()) {
                 continue;
             }
@@ -49,5 +49,13 @@ public class ShoppingCart {
             items.remove(index);
             System.out.printf(">>> %s removed from cart\n", itemToDelete);
         }
+    }
+
+    public void setItems(ArrayList<String> loadedItems) {
+        this.items = loadedItems;
+    }
+
+    public ArrayList<String> getItems() {
+        return this.items;
     }
 }

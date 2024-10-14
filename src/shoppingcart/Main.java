@@ -2,10 +2,12 @@ package shoppingcart;
 
 import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException, IOException{
 
 
         String dbFolder = "";
@@ -27,8 +29,9 @@ public class Main{
         }
 
         System.out.printf(">>> Database is set to '%s'\n", dbFolder);
-        
 
+        ShoppingCartDB shoppingCartDB = new ShoppingCartDB(dbFolder);
+        
         // Initialise console
         Console cons = System.console();
 
@@ -40,11 +43,21 @@ public class Main{
 
         while (true) {
             System.out.print("Command: ");
-            String command = cons.readLine().trim().toLowerCase();
+            String input = cons.readLine().trim().toLowerCase();
+
+            // Get the first part as the command
+            String[] parts = input.split(" ");
+
+            String command = parts[0];
 
             if (command.equals("exit")) {
                 System.out.println(">>> Exited shopping cart");
                 break;
+            }
+
+            else if (command.equals("login")) {
+                shoppingCart.setItems(shoppingCartDB.login(parts[1], dbFolder));
+                shoppingCart.list();
             }
 
             else if (command.equals("list")) {
@@ -52,15 +65,20 @@ public class Main{
             }
 
             else if (command.equals("add")) {
-                System.out.print("Item(s) to add: ");
-                String toAdd = cons.readLine();
-                shoppingCart.add(toAdd);
+                shoppingCart.add(parts);
             }
 
             else if (command.equals("delete")) {
-                System.out.print("Delete Item Number: ");
-                int itemNumber = Integer.parseInt(cons.readLine());
+                int itemNumber = Integer.parseInt(parts[1].trim());
                 shoppingCart.delete(itemNumber);
+            }
+
+            else if (command.equals("save")) {
+                shoppingCartDB.save(shoppingCart.getItems());
+            }
+
+            else if (command.equals("users")) {
+                shoppingCartDB.users();
             }
             
             else {
